@@ -1,0 +1,61 @@
+package day13.com.ict.edu;
+
+public class Ex03_static {
+    
+	//static 초기화
+    //          static {
+    //              초기화 내용
+    //                   }
+    // static 초기화 위에 있으면 값이 변경
+	// 밑에 있으면 변경 x
+	// 밑에 있을 때 값이 없으면 넣어줌
+	
+	
+	int s1 = 100;
+	private int p1 = 100;
+	static int s2 ;
+	
+	public static int k1 = 100;
+	static int k2 = 100;
+	private static int k3 = 100;
+	
+	// 생성자 : 인스턴스 초기화 목적
+	public Ex03_static() {
+		s1 = 200;
+		s2 = 400;
+		s3 = 500;
+	}
+	
+	static {
+		m1 = 1000;
+		s2 = 1000;
+		k2 = 1000;
+		m2 = 1000;
+	}
+	
+	int s3 ;
+	static int m1 ;
+	static int m2 = 500;
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+}
