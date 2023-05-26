@@ -92,10 +92,6 @@ public class Homework extends JFrame implements ActionListener {
 		jb2.addActionListener(this);
 		jb3.addActionListener(this);
 
-		jrb1.addActionListener(this);
-		jrb2.addActionListener(this);
-		jrb3.addActionListener(this);
-		jrb4.addActionListener(this);
 	}
 
 	@Override
