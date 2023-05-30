@@ -1,0 +1,53 @@
+package jdbc.com.ict.edu;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
+
+// delete
+public class Ex05_Statement_delete {
+	public static void main(String[] args) {
+
+		// 접속과 처리를 위한 클래스
+		Connection con = null;
+		Statement stmt = null;
+		ResultSet rs = null;
+		int result = 0;
+
+		try {
+			Class.forName("oracle.jdbc.driver.OracleDriver");
+			String url = "jdbc:oracle:thin:@localhost:1521:xe";
+			String user = "c##pcl";
+			String password = "1111";
+			con = DriverManager.getConnection(url, user, password);
+
+			// delete (6, 이강인, 대한민국 서울, 000-9000-0001) 삭제
+			String sql = "delete from CUSTOMER테이블 where custid = 6";
+			stmt = con.createStatement();
+
+			result = stmt.executeUpdate(sql);
+			if (result > 0) {
+				// 성공하면 select문을 이용해서 보기
+				sql = "select * from customer테이블 order by custid asc";
+				// stmt = con.createStatement();
+				rs = stmt.executeQuery(sql);
+				while (rs.next()) {
+					System.out.print(rs.getString(1) + "\t");
+					System.out.print(rs.getString(2) + "\t");
+					System.out.print(rs.getString(3) + "\t");
+					System.out.print(rs.getString(4) + "\n");
+				} 
+			}
+		} catch (Exception e) {
+			System.out.println("제대로 된 데이터 넣기" + e);
+		} finally {
+			try {
+				rs.close();
+				stmt.close();
+				con.close();
+			} catch (Exception e2) {
+			}
+		} 
+	}
+}
