@@ -2,9 +2,11 @@ package day26.com.ict.edu;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.Toolkit;
 
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -15,13 +17,14 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 
 public class Team_HW extends JFrame{
-	JPanel jp1, jp2, jp3;
+	JPanel jp1, jp2, jp3, sp1;
 	JTextField id, name, phone, address, com, jtf;
 	GridLayout gl1;
 	JButton add, delete, update, search, clear, all;
 	JComboBox jcb1;
 	JTable jtb;
 	JScrollPane jsp;
+	JLabel jl1, jl2, jl3, jl4, jl5;
 
 	public Team_HW() {
 		super("표");
@@ -29,24 +32,45 @@ public class Team_HW extends JFrame{
 		JLabel jl = new JLabel("Address Book");
 		jl.setHorizontalAlignment(JLabel.CENTER);
 		
-		jp1 = new JPanel(new GridLayout(5,1));
+		jp1 = new JPanel(new FlowLayout());
+		BoxLayout bo = new BoxLayout(jp1, BoxLayout.PAGE_AXIS);
+		jp1.setLayout(bo);
 	
-		id = new JTextField(15);
-		name = new JTextField(15);
-		phone = new JTextField(15);
-		address = new JTextField(15);
-		com = new JTextField(15);
+		JPanel jid = new JPanel();
+		jl1 = new JLabel("ID : ");
+		id = new JTextField(15);		
+		jid.add(jl1);
+		jid.add(id);
 		
-		jp1.add(new JLabel("ID : "));
-		jp1.add(id);
-		jp1.add(new JLabel("이름 : "));
-		jp1.add(name);
-		jp1.add(new JLabel("전화 : "));
-		jp1.add(phone);
-		jp1.add(new JLabel("주소 : "));
-		jp1.add(address);
-		jp1.add(new JLabel("회사 : "));
-		jp1.add(com);
+		JPanel jname = new JPanel();
+		jl2 = new JLabel("이름 : ");
+		name = new JTextField(15);
+		jname.add(jl2);
+		jname.add(name);
+		
+		JPanel jphone = new JPanel();
+		jl3 = new JLabel("전화 : ");
+		phone = new JTextField(15);
+		jphone.add(jl3);
+		jphone.add(phone);
+		
+		JPanel jadd = new JPanel();
+		jl4 = new JLabel("주소 : ");
+		address = new JTextField(15);
+		jadd.add(jl4);
+		jadd.add(address);
+		
+		JPanel jcom = new JPanel();
+		jl5 = new JLabel("회사 : ");
+		com = new JTextField(15);
+		jcom.add(jl5);
+		jcom.add(com);
+		
+		jp1.add(jid);
+		jp1.add(jname);
+		jp1.add(jphone);
+		jp1.add(jadd);
+		jp1.add(jcom);
 		
 	   jp2 = new JPanel();
 	
@@ -71,13 +95,19 @@ public class Team_HW extends JFrame{
 		jp2.add(clear);
 		jp2.add(all);
 		
-		Team_Table table = new Team_Table();
-		jtb = new JTable(table);
+		jtb = new JTable(15, 5);
 		jsp = new JScrollPane(jtb);
 		
+		TeamTable table = new TeamTable();
+		JTable jtable = new JTable(table);
+		   JScrollPane jsp = new JScrollPane(jtable);
+		
+		sp1 = new JPanel();
+		sp1.add(jp1);
+		sp1.add(jsp);
+			
 		add(jl, BorderLayout.NORTH);
-		add(jp1, BorderLayout.WEST);
-		add(jsp, BorderLayout.EAST);
+		add(sp1, BorderLayout.CENTER);
 		add(jp2, BorderLayout.SOUTH);
 		
 		pack();
