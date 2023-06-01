@@ -50,7 +50,7 @@ public class Ex05_File_Save extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				String strpath = jtf.getText();
 				String sj = jta.getText();
-				if (strpath.length() > -1) {
+				if (strpath.length() > 0) {
 					String tmp = Ex05_team.team(strpath, sj);
 				}
 
