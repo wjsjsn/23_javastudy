@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
+// UPDATE
 public class Ex06_Statement_update {
 public static void main(String[] args) {
 	Connection con = null;
