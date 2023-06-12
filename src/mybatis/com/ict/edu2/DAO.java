@@ -1,12 +1,13 @@
-package mybatis.com.ict.edu;
+package mybatis.com.ict.edu2;
 
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 
-// DB 처리하는 메서드들을 가지고 있는 클래스
+import mybatis.com.ict.edu.DBService;
+import mybatis.com.ict.edu.VO;
+
 public class DAO {
-// 실제 사용하는 클래스 : SqlSession
 	private static SqlSession ss;
 
 	// 싱글턴 패턴(동기화 처리) : 프로그램이 종료될 때까지 한 번 만들어진 객체를 재사용
