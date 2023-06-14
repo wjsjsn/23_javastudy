@@ -18,8 +18,7 @@ CREATE TABLE customer100
 	PRIMARY KEY (custid)
 );
 
-
-CREATE TABLE orders100
+CREATE TABLE orders2
 (
 	orderid number NOT NULL,
 	bookid number,

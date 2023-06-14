@@ -3,14 +3,12 @@ package network.com.ict.edu2;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.Socket;
-import java.util.Scanner;
 
 public class EchoClient {
  public static void main(String[] args) {
 	Socket s = null;
 	OutputStream os = null;
 	InputStream is = null;
-	Scanner scan = new Scanner(System.in);
 	
 	try {
 		s = new Socket("192.168.0.91", 7777);
@@ -21,8 +19,7 @@ public class EchoClient {
 		is = s.getInputStream();
 		
 		// 메세지 전송
-		System.out.print("메세지를 입력하세요 >>> ");
-		String msg = scan.next();
+		String msg = "안녕하세요 ♡ Hello";
 		os.write(msg.getBytes());
 		os.flush();
 		

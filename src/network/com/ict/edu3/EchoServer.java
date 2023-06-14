@@ -1,52 +1,70 @@
 package network.com.ict.edu3;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-public class EchoServer {
-	public static void main(String[] args) {
-		ServerSocket ss = null;
-		InputStream is = null;
-		OutputStream os = null;
-		Socket s = null;
+public class EchoServer implements Runnable {
+	ServerSocket ss = null;
+	Socket s = null;
 
+	InputStream is = null;
+	BufferedInputStream bis = null;
+
+	OutputStream os = null;
+	BufferedOutputStream bos = null;
+
+	public EchoServer() {
 		try {
-			// 생성
-			ss = new ServerSocket(7777);
-			System.out.println("서버 대기 중 ...");
+			ss = new ServerSocket(7778);
+			System.out.println("서버 대기 중 ... ");
+			new Thread(this).start();
 
-			// 무한반복
-			while (true) {
-				// 클라이언트에게 요청이 올 때까지 대기하다가
-				// 요청이 오면 클라이언트와 통신할 소켓 만들기
-				s = ss.accept(); // 무한 대기상태
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 
-				// 입출력스트림 만들기
-				is = s.getInputStream();
-				os = s.getOutputStream();
-
-				// 데이터 수신
-				byte[] buff = new byte[100]; // 한글 깨지지 말라고 배열 사용
-				is.read(buff);
-
-				String read_data = new String(buff).trim();
-				String client_ip = s.getInetAddress().getHostAddress();
-				System.out.println("서버에 수신된 데이터 : " + read_data + "(" + client_ip + ")");
-
-				// 데이터 송신
-				os.write(read_data.getBytes());
-				os.flush();
-			}
-		} catch (Exception e) {
-		} finally {
+	@Override
+	public void run() {
+		while (true) {
 			try {
-				s.close();
-				os.close();
-				is.close();
-			} catch (Exception e2) {
+				s = ss.accept();
+				String ip = s.getInetAddress().getHostAddress();
+				
+				is = s.getInputStream();
+				bis = new BufferedInputStream(is);
+
+				os = s.getOutputStream();
+				bos = new BufferedOutputStream(os);
+
+				byte[] b = new byte[1024];
+				bis.read(b);
+
+				String msg = new String(b).trim();
+
+				bos.write(msg.getBytes());
+				bos.flush();
+
+			} catch (Exception e) {
+			} finally {
+				try {
+					s.close();
+					bos.close();
+					os.close();
+					bis.close();
+					is.close();
+				} catch (Exception e2) {
+				}
 			}
 		}
+	}
+
+	public static void main(String[] args) {
+		new EchoServer();
 	}
 }
