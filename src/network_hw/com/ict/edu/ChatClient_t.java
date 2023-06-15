@@ -1,4 +1,4 @@
-package network.com.ict.edu7;
+package network_hw.com.ict.edu;
 
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
@@ -95,8 +95,8 @@ public class ChatClient_t extends JFrame implements Runnable {
 		jta = new JTextArea();
 		jta.setEditable(false);
 		jta.setLineWrap(true);
-		jta.setBackground(new Color(204, 204, 255));
-		jta.setForeground(new Color(90, 90, 94));
+		jta.setBackground(new Color(90, 90, 94));
+		jta.setForeground(new Color(204, 204, 255));
 		jta.setFont(new Font("궁서", Font.BOLD, 15));
 
 		jsp = new JScrollPane(jta, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS,

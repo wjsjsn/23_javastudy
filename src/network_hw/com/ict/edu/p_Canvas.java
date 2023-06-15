@@ -1,4 +1,4 @@
-package network.com.ict.edu7;
+package network_hw.com.ict.edu;
 
 import java.awt.Canvas;
 import java.awt.Graphics;

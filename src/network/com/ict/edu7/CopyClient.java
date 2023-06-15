@@ -8,12 +8,12 @@ public class CopyClient extends Thread {
 	Socket s;
 	ChatServer server;
 
-	// 객체 직렬화
 	ObjectInputStream in;
 	ObjectOutputStream out;
-
-	// 닉네임 받기
 	String nickname;
+
+	// 현재 클라이언트가 참여하고 있는 방의 정보
+	ChatRoom c_room = null; // null이면 어떤 방도 참여하지 않고 있는 상태
 
 	public CopyClient(Socket s, ChatServer server) {
 		this.s = s;
@@ -21,7 +21,6 @@ public class CopyClient extends Thread {
 		try {
 			in = new ObjectInputStream(s.getInputStream());
 			out = new ObjectOutputStream(s.getOutputStream());
-
 		} catch (Exception e) {
 		}
 	}
@@ -32,42 +31,86 @@ public class CopyClient extends Thread {
 			try {
 				Object obj = in.readObject();
 				if (obj != null) {
-					Protocol p = (Protocol) obj;
+					Protocol p = (Protocol)obj;
 					switch (p.getCmd()) {
-					case 0: // 접속 종료
+					case 0: // 종료
+						// 현재 방에 참여하고 있는 상태인지 확인
+						if(c_room != null) {
+							outRoom();
+						}
 						out.writeObject(p);
+						out.flush();
 						break esc;
-
-					case 1: // 닉네임 받기
+					case 1: // 메시지
+						p.setMsg(nickname + " : " + p.getMsg());
+						c_room.sendProtocol(p);
+						break;
+					case 2: // 접속 및 갱신
 						nickname = p.getMsg();
-						p.setCmd(2); // 다른 사람들에게는 일반 메시지로 전달돼서 2번
-						p.setMsg(nickname + "님 입장");
-
-						// 접속자 모두에게 전달
+						// 현재 대기실 명단 수집
+						p.setNames(server.getUserName());
+						// 방 제목 수집
+						p.setRooms(server.getRoomName());
+						// 모두에게 전달
 						server.sendMsg(p);
 						break;
-
-					case 2: // 메시지 일반 채팅
-						p.setCmd(2); 
-						p.setMsg(nickname + " : " + p.getMsg());
-						server.sendMsg(p);
+					case 3: // 방 만들기(방 객체 생성)
+						c_room = new ChatRoom(p.getMsg());
+						// 만든 사람이 방에 들어가기
+						c_room.join(this);
+						// 대기실에서는 삭제
+						server.removeClient(this);
+						// 서버에 만든 방 추가
+						server.addRoom(c_room);
+						// 대기실 갱신
+						server.refresh();
+						break;
+					case 4: // 방 참여
+						// r_index를 이용해 방 객체 가져오기
+						c_room = server.getRoom(p.getR_index());
+						// 방에 들어가기
+						c_room.join(this);
+						// 대기실에서 나오기
+						server.removeClient(this);
+						// 대기실 갱신
+						server.refresh();
+						break;
+					case 5: // 방 나가기
+						outRoom();
+						server.refresh();
+						// 대기실에 자기 자신 추가
+						server.addClient(this);
+						break;
+					case 6: // 쪽지 보내기
+						CopyClient client = server.c_list.get(p.getC_index());
+						String msg = p.getMsg();
+						p.setMsg(nickname + "님 쪽지 : \n" + msg);
+						
+						// 선택된 사람한테만 보내기(c_index 위치에 있는 사람)
+						client.out.writeObject(p);
+						client.out.flush();
 						break;
 					}
 				}
 			} catch (Exception e) {
 			}
-		} // 무한루프 끝
+		} // 무한 반복 끝
+		server.removeClient(this);
 		try {
 			out.close();
 			in.close();
 			s.close();
-
-			server.removeClient(this);
-			Protocol p2 = new Protocol();
-			p2.setCmd(2);
-			p2.setMsg(nickname + "님 퇴장");
-			server.sendMsg(p2);
 		} catch (Exception e) {
 		}
+	} // run 메서드 끝
+	
+	// 방 나가기 메서드
+	private void outRoom() {
+		c_room.getOut(this);
+		int cnt = c_room.getJoinCount();
+		if(cnt == 0) {
+			server.removeRoom(c_room);
+		}
+		c_room = null;
 	}
 }
