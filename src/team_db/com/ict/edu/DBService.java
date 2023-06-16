@@ -1,4 +1,4 @@
-package mybatis.com.ict.edu2;
+package team_db.com.ict.edu;
 
 import java.io.InputStream;
 

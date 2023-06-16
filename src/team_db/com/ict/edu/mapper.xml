@@ -9,25 +9,25 @@
 		없음. Why? -> 무조건 int(숫자) <update id="" parameterType=""></update> <insert 
 		id="" parameterType=""></insert> <delete id="" parameterType=""></delete> 
 		<select id="" resultType=""></select> <select id="" resultType="" parameterType=""></select> -->
-	<select id="custList" resultType="mybatis.com.ict.edu2.VO">
+	<select id="custList" resultType="team_db.com.ict.edu.VO">
 		select * from customer테이블 order by custid
 	</select>
 
 	<select id="custOne" parameterType="String"
-		resultType="mybatis.com.ict.edu2.VO">
+		resultType="team_db.com.ict.edu.VO">
 		select * from customer테이블 where custid = #{custid}
 	</select>
 
-	<insert id="custIns" parameterType="mybaits.com.ict.edu2.VO">
+	<insert id="custIns" parameterType="team_db.com.ict.edu.VO">
 		insert into customer테이블(custid, name, address, phone)
 		values(customer_seq.nextval, #{name}, #{address}, #{phone})
 	</insert>
 
-	<delete id="custDel" parameterType="mybaits.com.ict.edu2.VO">
+	<delete id="custDel" parameterType="team_db.com.ict.edu.VO">
 		delete from customer테이블 where custid = #{custid}
 	</delete>
 
-	<update id="custUp" parameterType="mybaits.com.ict.edu2.VO">
+	<update id="custUp" parameterType="team_db.com.ict.edu.VO">
 		update customer테이블
 		set name = #{name}, address = #{address}, phone = #{phone}
 		where custid = #{custid}

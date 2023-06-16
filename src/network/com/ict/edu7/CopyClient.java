@@ -111,6 +111,9 @@ public class CopyClient extends Thread {
 		if(cnt == 0) {
 			server.removeRoom(c_room);
 		}
-		c_room = null;
+	Protocol p = new Protocol();
+	p.setCmd(5);
+	p.setNames(c_room.getJoinUsers());
+	c_room.sendProtocol(p);
 	}
 }

@@ -1,11 +1,11 @@
-package mybatis.com.ict.edu2;
+package team_db.com.ict.edu;
 
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 
-import mybatis.com.ict.edu2.DBService;
-import mybatis.com.ict.edu2.VO;
+import team_db.com.ict.edu.DBService;
+import team_db.com.ict.edu.VO;
 
 public class DAO {
 	private static SqlSession ss;

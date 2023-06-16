@@ -71,6 +71,7 @@ public class ChatServer implements Runnable {
 		p.setNames(getUserName()); // 대기실 명단 갱신
 		p.setRooms(getRoomName()); // 방 목록 갱신
 
+		// 대기실 사람에게 전달
 		sendMsg(p);
 	}
 
