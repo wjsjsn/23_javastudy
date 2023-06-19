@@ -76,7 +76,7 @@ public class DB_Client extends JFrame implements Runnable{
 		jta = new JTextArea();
 		jsp = new JScrollPane(jta, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
 				ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-		jta.setFont(new Font("굴림", Font.PLAIN, 15));
+	//	jta.setFont(new Font("굴림", Font.PLAIN, 15));
 		jta.setLineWrap(true);
 		jta.setEditable(false);
 
@@ -178,10 +178,10 @@ public class DB_Client extends JFrame implements Runnable{
 		jta.append("\n\t\t\t 회원 전체 정보 \n\n");
 		jta.append("\t번호\t이름\t주소\t\t전화번호\n");
 		for (VO k : list) {
-			jta.append("\t" + k.getCustid() + "\t");
-			jta.append("\t" + k.getName() + "\t");
-			jta.append("\t" + k.getAddress() + "\t");
-			jta.append("\t" + k.getPhone() + "\t");
+			jta.append( k.getCustid()+" ");
+			jta.append( k.getName()+"  ");
+			jta.append(k.getAddress()+"  ");
+			jta.append(k.getPhone() + "\n");
 		}
 	}
 
